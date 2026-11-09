@@ -1,0 +1,5 @@
+PBOINF-101;Pemograman Berorientasi Objek;Uci Ramadhani;Informatika;2022;2
+SL-201;Sekawan Limo;Agis Jr;Cerita Rakyat;2025;8
+ML-202;Malin Kundang;Tuan Muda;Cerita Rakyat;1988;2
+CN-302;Cinta Nana;Naisya;Novel;2026;4
+IKEM-321;Ikatan Mahasiswa;Mufalah;Novel;2021;1
