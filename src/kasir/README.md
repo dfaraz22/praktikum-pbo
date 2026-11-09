@@ -1,5 +1,16 @@
 # Sistem Kasir Toko Baju (Java)
 
+## Data Diri
+
+| | |
+|---|---|
+| Nama | Faradilla Zahrotul Ashifa |
+| NIM | L0325023 |
+| Kelas | B |
+| Program Studi | Informatika |
+| Universitas | Universitas Sebelas Maret |
+
+## Deskripsi Kasus
 Program simulasi kasir sederhana untuk toko pakaian, dibuat dengan Java untuk memenuhi Lab Sessions pertama dan menerapkan konsep dasar OOP (*Object-Oriented Programming*).
 
 Kasir memasukkan kode produk satu per satu, lalu program menghitung subtotal, diskon, pajak (PPN), sampai mencetak struk pembayaran ke layar.
