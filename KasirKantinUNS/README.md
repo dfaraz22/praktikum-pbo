@@ -1,5 +1,20 @@
 # Sistem Kasir Kantin UNS
 
+Aplikasi kasir sederhana berbasis Java Swing dengan perhitungan diskon otomatis, simulasi dua kasir menggunakan multithreading, dan simulasi pencetakan struk.
+
+## Daftar Isi
+
+- [Identitas](#identitas)
+- [Deskripsi Program](#deskripsi-program)
+- [Teknologi](#teknologi)
+- [Struktur Project](#struktur-project)
+- [Penjelasan Class](#penjelasan-class)
+- [Fitur Program](#fitur-program)
+- [Implementasi Materi Praktikum](#implementasi-materi-praktikum)
+- [Cara Menjalankan Program](#cara-menjalankan-program)
+- [Output Program](#output-program)
+- [Catatan](#catatan)
+
 ## Identitas
 
 | | |
@@ -12,13 +27,21 @@
 
 ## Deskripsi Program
 
-Sistem Kasir Kantin UNS adalah aplikasi kasir sederhana berbasis Java yang dibuat untuk memenuhi praktikum PBO pertemuan 11 dan 12. Program ini menerapkan enkapsulasi, multithreading, dan GUI Programming menggunakan Java Swing.
+Sistem Kasir Kantin UNS dibuat untuk memenuhi praktikum PBO pertemuan 11 dan 12. Program ini menerapkan enkapsulasi, multithreading, dan GUI Programming menggunakan Java Swing.
 
-Pengguna memasukkan nama menu, harga, dan jumlah pesanan. Program menghitung subtotal dan total pembayaran. Jika subtotal lebih dari Rp50.000, pelanggan mendapat diskon 10%. Program juga memiliki simulasi dua kasir yang melayani pelanggan secara bersamaan dan simulasi pencetakan struk yang berjalan pada thread terpisah.
+Pengguna memasukkan nama menu, harga, dan jumlah pesanan. Program menghitung subtotal dan total pembayaran. Jika subtotal lebih dari Rp50.000, pelanggan mendapat diskon 10%. Program juga menyediakan simulasi dua kasir yang melayani pelanggan secara bersamaan, serta simulasi pencetakan struk yang berjalan pada thread terpisah.
+
+## Teknologi
+
+| Komponen | Keterangan |
+|---|---|
+| Bahasa | Java |
+| GUI | Java Swing |
+| IDE | NetBeans |
+| Package | `lab.kasir` |
+| Tema tampilan | Minimalist modern, biru muda dan putih |
 
 ## Struktur Project
-
-Seluruh class berada dalam package `lab.kasir`.
 
 ```text
 KasirKantinUNS/
@@ -29,12 +52,21 @@ KasirKantinUNS/
 │           ├── Kasir.java
 │           ├── MainKasir.java
 │           └── KasirFrame.java
-├── screenshots/
 ├── nbproject/
 ├── build.xml
 ├── manifest.mf
+├── Output.png
 └── README.md
 ```
+
+Ringkasan peran tiap class:
+
+| Class | Peran |
+|---|---|
+| `Pesanan` | Mengelola subtotal, diskon, dan total pembayaran |
+| `Kasir` | Thread untuk simulasi kasir yang melayani pelanggan |
+| `MainKasir` | Class utama untuk pengujian dan menjalankan aplikasi |
+| `KasirFrame` | Tampilan GUI dan pengelolaan struk |
 
 ## Penjelasan Class
 
@@ -42,10 +74,12 @@ KasirKantinUNS/
 
 Class ini mengelola perhitungan transaksi. Atribut `subtotal` bersifat `private` sebagai penerapan enkapsulasi, sehingga nilainya hanya dapat diakses melalui method di dalam class.
 
-- `tambahItem()` menambahkan hasil perkalian harga dan jumlah ke subtotal.
-- `getSubtotal()` mengembalikan nilai subtotal.
-- `hitungTotal()` menghitung total pembayaran. Jika subtotal lebih dari Rp50.000, total dikurangi diskon 10%.
-- `reset()` mengembalikan subtotal menjadi nol.
+| Method | Fungsi |
+|---|---|
+| `tambahItem()` | Menambahkan hasil perkalian harga dan jumlah ke subtotal |
+| `getSubtotal()` | Mengembalikan nilai subtotal |
+| `hitungTotal()` | Menghitung total pembayaran, dengan diskon 10% jika subtotal lebih dari Rp50.000 |
+| `reset()` | Mengembalikan subtotal menjadi nol |
 
 ### Kasir.java
 
@@ -55,7 +89,7 @@ Method `run()` berisi proses melayani lima pelanggan. Setiap pelanggan dilayani 
 
 ### MainKasir.java
 
-Class ini adalah class utama yang dijalankan pertama kali. Isinya terbagi menjadi tiga bagian:
+Class ini adalah class utama yang dijalankan pertama kali. Alur kerjanya terdiri dari tiga bagian:
 
 1. Pengujian class `Pesanan` dengan data Nasi Goreng, Es Teh, dan Ayam Bakar.
 2. Simulasi dua kasir, yaitu Dina dan Eko, yang dijalankan dengan `start()`. Method `join()` dipakai agar program menunggu kedua thread selesai sebelum menampilkan pesan bahwa seluruh pelanggan selesai dilayani.
@@ -63,15 +97,17 @@ Class ini adalah class utama yang dijalankan pertama kali. Isinya terbagi menjad
 
 ### KasirFrame.java
 
-Class ini membuat tampilan aplikasi menggunakan Java Swing dan merupakan turunan dari `JFrame`. Komponen disusun menggunakan `setBounds()` dengan tema warna biru muda dan putih.
+Class ini membuat tampilan aplikasi menggunakan Java Swing dan merupakan turunan dari `JFrame`. Komponen disusun menggunakan `setBounds()`.
 
 Komponen yang digunakan:
 
-- `JLabel` untuk judul, keterangan, total bayar, dan status.
-- `JTextField` untuk input nama menu, harga, dan jumlah.
-- `JButton` untuk tombol Tambah, Hitung Total, dan Cetak Struk.
-- `JTextArea` di dalam `JScrollPane` untuk menampilkan struk.
-- `JOptionPane` untuk menampilkan pesan peringatan.
+| Komponen | Kegunaan |
+|---|---|
+| `JLabel` | Judul, keterangan, total bayar, dan status |
+| `JTextField` | Input nama menu, harga, dan jumlah |
+| `JButton` | Tombol Tambah, Hitung Total, dan Cetak Struk |
+| `JTextArea` dan `JScrollPane` | Area tampilan struk |
+| `JOptionPane` | Pesan peringatan dan validasi |
 
 Pengelolaan data pesanan:
 
@@ -79,38 +115,43 @@ Pengelolaan data pesanan:
 - Perhitungan subtotal dan total tetap dilakukan oleh class `Pesanan`.
 - Setiap jendela memiliki nomor transaksi otomatis dengan format `TRX-001`, `TRX-002`, dan seterusnya.
 
-Method pada class ini:
+Method utama:
 
-- `tambahPesanan()` memvalidasi input, menambahkan item ke pesanan, lalu mengosongkan kolom input.
-- `tampilkanDaftarSementara()` menampilkan daftar pesanan sementara pada area struk setiap kali item ditambahkan.
-- `hitungTotal()` menghitung total pembayaran dan menampilkannya pada label total.
-- `buatIsiStruk()` menyusun isi struk lengkap.
-- `cetakStruk()` menjalankan simulasi pencetakan menggunakan thread.
+| Method | Fungsi |
+|---|---|
+| `tambahPesanan()` | Memvalidasi input, menambahkan item ke pesanan, lalu mengosongkan kolom input |
+| `tampilkanDaftarSementara()` | Menampilkan daftar pesanan sementara pada area struk |
+| `hitungTotal()` | Menghitung total pembayaran dan menampilkannya pada label total |
+| `buatIsiStruk()` | Menyusun isi struk lengkap |
+| `cetakStruk()` | Menjalankan simulasi pencetakan menggunakan thread |
 
 ## Fitur Program
 
-1. Input nama menu, harga, dan jumlah pesanan.
-2. Perhitungan subtotal otomatis untuk setiap item yang ditambahkan.
-3. Diskon 10% jika subtotal lebih dari Rp50.000.
-4. Daftar pesanan sementara pada area struk.
-5. Struk lengkap berisi identitas Kantin UNS, nomor transaksi, tanggal dan waktu, daftar pesanan, subtotal, diskon, dan total bayar.
-6. Validasi input menggunakan `JOptionPane`:
-   - Semua kolom wajib diisi.
-   - Harga dan jumlah harus lebih dari 0.
-   - Harga harus berupa angka dan jumlah harus berupa bilangan bulat.
-   - Pesanan tidak boleh kosong saat menghitung total atau mencetak struk.
-7. Jika tombol Cetak Struk ditekan sebelum Hitung Total, total dihitung otomatis terlebih dahulu.
-8. Simulasi pencetakan struk dengan status yang berubah selama proses.
-9. Simulasi dua kasir yang bekerja bersamaan.
+- Input nama menu, harga, dan jumlah pesanan.
+- Perhitungan subtotal otomatis untuk setiap item yang ditambahkan.
+- Diskon 10% jika subtotal lebih dari Rp50.000.
+- Daftar pesanan sementara pada area struk.
+- Struk lengkap berisi identitas Kantin UNS, nomor transaksi, tanggal dan waktu, daftar pesanan, subtotal, diskon, dan total bayar.
+- Total dihitung otomatis jika tombol Cetak Struk ditekan sebelum Hitung Total.
+- Simulasi pencetakan struk dengan status yang berubah selama proses.
+- Simulasi dua kasir yang bekerja bersamaan.
+
+Validasi input yang tersedia:
+
+| Kondisi | Pesan |
+|---|---|
+| Ada kolom yang kosong | Semua field harus diisi |
+| Harga atau jumlah kurang dari atau sama dengan 0 | Harga dan jumlah harus lebih dari 0 |
+| Harga bukan angka atau jumlah bukan bilangan bulat | Input tidak valid |
+| Hitung total atau cetak struk tanpa pesanan | Belum ada pesanan |
 
 ## Implementasi Materi Praktikum
 
 ### Pertemuan 11 - Multithreading
 
-Multithreading diterapkan pada dua bagian.
+**Simulasi dua kasir.** Class `Kasir` mewarisi `Thread`. Kasir Dina dan Kasir Eko dijalankan dengan `start()`, masing-masing melayani lima pelanggan dengan jeda `sleep()` 500 milidetik. Method `join()` digunakan agar program utama menunggu kedua kasir selesai.
 
-1. **Simulasi dua kasir.** Class `Kasir` mewarisi `Thread`. Kasir Dina dan Kasir Eko dijalankan dengan `start()`, masing-masing melayani lima pelanggan dengan jeda `sleep()` 500 milidetik. Method `join()` digunakan agar program utama menunggu kedua kasir selesai.
-2. **Simulasi cetak struk.** Saat tombol Cetak Struk ditekan, sebuah thread baru dibuat untuk menunggu selama dua detik. Selama proses ini tombol Cetak Struk dinonaktifkan dan status berubah menjadi "Mencetak struk...". GUI tetap responsif karena proses menunggu tidak berjalan pada thread utama. Setelah dua detik, perubahan tampilan dikembalikan ke thread GUI melalui `SwingUtilities.invokeLater()`, kemudian status menjadi "Struk selesai" dan struk lengkap ditampilkan.
+**Simulasi cetak struk.** Saat tombol Cetak Struk ditekan, sebuah thread baru dibuat untuk menunggu selama dua detik. Selama proses ini tombol dinonaktifkan dan status berubah menjadi "Mencetak struk...". GUI tetap responsif karena proses menunggu tidak berjalan pada thread utama. Setelah dua detik, perubahan tampilan dikembalikan ke thread GUI melalui `SwingUtilities.invokeLater()`, kemudian status menjadi "Struk selesai" dan struk lengkap ditampilkan.
 
 ### Pertemuan 12 - GUI Programming
 
@@ -129,7 +170,7 @@ GUI dibuat dengan Java Swing menggunakan `JFrame`, `JLabel`, `JTextField`, `JTex
 
 ## Output Program
 
-### 1. Pengujian Perhitungan (Tahap 1)
+### 1. Pengujian Perhitungan
 
 Data pengujian:
 
@@ -141,39 +182,21 @@ Data pengujian:
 
 Hasil perhitungan:
 
-- Setelah Nasi Goreng, subtotal Rp30.000.
-- Setelah Es Teh, subtotal Rp45.000 dan belum mendapat diskon.
-- Setelah Ayam Bakar, subtotal Rp70.000. Diskon 10% sebesar Rp7.000, sehingga total bayar Rp63.000.
+| Setelah menambah | Subtotal | Diskon | Total Bayar |
+|---|---:|---:|---:|
+| Nasi Goreng | Rp30.000 | - | - |
+| Es Teh | Rp45.000 | Tidak ada | Rp45.000 |
+| Ayam Bakar | Rp70.000 | Rp7.000 (10%) | Rp63.000 |
 
-### 2. Simulasi Dua Kasir (Tahap 2)
+### 2. Simulasi Dua Kasir
 
 Output NetBeans menampilkan Kasir Dina dan Kasir Eko yang melayani pelanggan ke-1 sampai ke-5. Urutan tampilan keduanya dapat berbeda pada setiap eksekusi karena kedua thread berjalan bersamaan. Setelah keduanya selesai, program menampilkan pesan "Semua pelanggan selesai dilayani".
 
-![Output NetBeans](screenshots/output-netbeans.png)
+### 3. Tampilan GUI dan Struk
 
-### 3. Tampilan GUI (Tahap 3)
+Jendela aplikasi berisi form input pesanan, tombol Tambah dan Hitung Total, area struk, label total bayar, tombol Cetak Struk, dan label status. Saat tombol Cetak Struk ditekan, status berubah menjadi "Mencetak struk...". Setelah dua detik, status menjadi "Struk selesai" dan struk lengkap tampil pada area struk.
 
-Jendela aplikasi berisi form input pesanan, tombol Tambah dan Hitung Total, area struk, label total bayar, tombol Cetak Struk, dan label status.
-
-Tampilan setelah beberapa pesanan ditambahkan:
-
-![Tampilan GUI setelah pesanan ditambahkan](screenshots/gui-pesanan.png)
-
-Tampilan setelah tombol Hitung Total ditekan:
-
-![Tampilan GUI setelah hitung total](screenshots/gui-total.png)
-
-### 4. Cetak Struk dengan Thread (Tahap 4)
-
-Saat tombol Cetak Struk ditekan, status berubah menjadi "Mencetak struk...". Setelah dua detik, status menjadi "Struk selesai" dan area struk menampilkan struk lengkap.
-
-Tampilan saat proses mencetak:
-
-![Status mencetak struk](screenshots/gui-mencetak.png)
-
-Tampilan struk setelah selesai dicetak:
-
-![Struk pembelian](screenshots/struk-pembelian.png)
+![Output Program](Output.png)
 
 ## Catatan
 
